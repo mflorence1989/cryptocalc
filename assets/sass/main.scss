@@ -7,17 +7,37 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-//background: black;
+background: #0f0449;
+}
+.home{
+  background: #0f0449;
 }
 
 header{
+
+  padding: 17px 0;
+  overflow: auto;
   .logo{
     display: inline-block;
     float: left;
+    color:white;
   }
   .menu{
     display: inline-block;
     float: right;
+    color:white;
+    a{
+      color:white;
+      text-decoration: none;
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 3px;
+      border: 1px solid #304ffe;
+      &:hover{
+        color: #304ffe;
+        transition: .04s all ease-in-out;
+      }
+    }
 
   }
 }
