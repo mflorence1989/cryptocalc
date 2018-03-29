@@ -1,6 +1,7 @@
 import React, { Component} from 'react'
 import ReactDOM from 'react-dom'
-import Home from './home.js'
+import Home from './Home.js'
+import Results from './Results.js'
 
 class Layout extends Component {
   constructor () {
@@ -18,11 +19,13 @@ class Layout extends Component {
       lili
       </div>
       <nav className="menu">
-      <a href="#">register</a>
+      <a href="#"
+      className="main-btn">register</a>
 
       </nav>
         </header>
-        <Home />
+
+        <Results />
         </div>
       </div>)
   }

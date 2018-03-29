@@ -13,6 +13,8 @@ background: #0f0449;
   background: #0f0449;
 }
 
+
+
 header{
 
   padding: 17px 0;
@@ -27,17 +29,24 @@ header{
     float: right;
     color:white;
     a{
-      color:white;
-      text-decoration: none;
-      display: inline-block;
-      padding: 10px 20px;
-      border-radius: 3px;
-      border: 1px solid #304ffe;
-      &:hover{
-        color: #304ffe;
-        transition: .04s all ease-in-out;
-      }
+
     }
 
+  }
+}
+
+.main-btn{
+  color:white;
+  text-decoration: none;
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 3px;
+  border: 1px solid #304ffe;
+  &:hover{
+    color: #07d5f3;
+    transition: .04s all ease-in-out;
+  }
+  &.active{
+    background: #304ffe;
   }
 }
