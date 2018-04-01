@@ -7,9 +7,27 @@ class Layout extends Component {
   constructor () {
     super()
     this.state = {
-      name: 'mario'
+      name: 'mario',
+      location: 'home',
     }
+    this.routingSystem =
+    this.routingSystem.bind(this)
   }
+  routingSystem(){
+    switch(this.state.location) {
+    case 'home':
+    return <Home/>
+
+        break;
+    case 'results':
+      return <Results/>
+
+        break;
+    default:
+      return <Home/>
+}
+  }
+
 
   render () {
     return (<div className="home">
@@ -25,7 +43,7 @@ class Layout extends Component {
       </nav>
         </header>
 
-        <Results />
+        {this.routingSystem()}
         </div>
       </div>)
   }
