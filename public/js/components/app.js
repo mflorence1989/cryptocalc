@@ -266,6 +266,20 @@ var Layout = function (_Component) {
   }
 
   _createClass(Layout, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      var self = this;
+      _axios2.default.get('https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=' + (0, _moment2.default)().unix() + '&extraParams=crypto_calc').then(function (response) {
+        self.setState({
+          btcToday: response.data.BTC
+        }, function () {
+          console.log(self.state);
+        });
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }, {
     key: 'routingSystem',
     value: function routingSystem() {
       switch (this.state.location) {
@@ -304,6 +318,19 @@ var Layout = function (_Component) {
           data: response.data.BTC
         }, function () {
           console.log(self.state);
+          var CP = self.state.data.USD;
+          var SP = self.state.btcToday.USD;
+          if (CP < SP) {
+            var gain = SP - CP;
+            var gainPercent = gain / CP * 100;
+            gainPercent = gainPercent.toFixed(2);
+            console.log('percent of the profit ' + gainPercent);
+          } else {
+            var loss = CP - SP;
+            var lossPercent = loss / CP * 100;
+            lossPercent = gainPercent.toFixed(2);
+            console.log('loss percent ' + lossPercent);
+          }
         });
       }).catch(function (error) {
         console.log(error);
