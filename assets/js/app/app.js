@@ -12,7 +12,7 @@ class Layout extends Component {
     this.state = {
       name: 'mario',
       location: 'home',
-      date: ''
+      date: moment()
     }
     this.routingSystem =
     this.routingSystem.bind(this)

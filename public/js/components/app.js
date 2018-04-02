@@ -84,7 +84,6 @@ var Home = function (_Component) {
               null,
               'Date'
             ),
-            _react2.default.createElement('input', { type: 'text', name: 'date' }),
             _react2.default.createElement(_reactDatepicker2.default, { selected: this.props.globalState.date,
               onChange: this.props.handleDateChange }),
             _react2.default.createElement(
@@ -253,7 +252,7 @@ var Layout = function (_Component) {
     _this.state = {
       name: 'mario',
       location: 'home',
-      date: ''
+      date: (0, _moment2.default)()
     };
     _this.routingSystem = _this.routingSystem.bind(_this);
     _this.handleDateChange = _this.handleDateChange.bind(_this);
