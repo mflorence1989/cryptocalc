@@ -1,113 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 100:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(20);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(21);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _Home = __webpack_require__(97);
-
-var _Home2 = _interopRequireDefault(_Home);
-
-var _Results = __webpack_require__(98);
-
-var _Results2 = _interopRequireDefault(_Results);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Layout = function (_Component) {
-  _inherits(Layout, _Component);
-
-  function Layout() {
-    _classCallCheck(this, Layout);
-
-    var _this = _possibleConstructorReturn(this, (Layout.__proto__ || Object.getPrototypeOf(Layout)).call(this));
-
-    _this.state = {
-      name: 'mario',
-      location: 'home'
-    };
-    _this.routingSystem = _this.routingSystem.bind(_this);
-    return _this;
-  }
-
-  _createClass(Layout, [{
-    key: 'routingSystem',
-    value: function routingSystem() {
-      switch (this.state.location) {
-        case 'home':
-          return _react2.default.createElement(_Home2.default, null);
-
-          break;
-        case 'results':
-          return _react2.default.createElement(_Results2.default, null);
-
-          break;
-        default:
-          return _react2.default.createElement(_Home2.default, null);
-      }
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'home' },
-        _react2.default.createElement(
-          'div',
-          { className: 'container' },
-          _react2.default.createElement(
-            'header',
-            null,
-            _react2.default.createElement(
-              'div',
-              { className: 'logo' },
-              'lili'
-            ),
-            _react2.default.createElement(
-              'nav',
-              { className: 'menu' },
-              _react2.default.createElement(
-                'a',
-                { href: '#',
-                  className: 'main-btn' },
-                'register'
-              )
-            )
-          ),
-          this.routingSystem()
-        )
-      );
-    }
-  }]);
-
-  return Layout;
-}(_react.Component);
-
-var app = document.getElementById('app');
-
-_reactDom2.default.render(_react2.default.createElement(Layout, null), app);
-
-/***/ }),
-
-/***/ 97:
+/***/ 221:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -119,13 +12,21 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(20);
+var _react = __webpack_require__(11);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(21);
+var _reactDom = __webpack_require__(19);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactDatepicker = __webpack_require__(57);
+
+var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+var _moment = __webpack_require__(0);
+
+var _moment2 = _interopRequireDefault(_moment);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -184,6 +85,8 @@ var Home = function (_Component) {
               'Date'
             ),
             _react2.default.createElement('input', { type: 'text', name: 'date' }),
+            _react2.default.createElement(_reactDatepicker2.default, { selected: this.props.globalState.date,
+              onChange: this.props.handleDateChange }),
             _react2.default.createElement(
               'button',
               { type: 'submit' },
@@ -202,7 +105,7 @@ exports.default = Home;
 
 /***/ }),
 
-/***/ 98:
+/***/ 222:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -214,11 +117,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(20);
+var _react = __webpack_require__(11);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(21);
+var _reactDom = __webpack_require__(19);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -297,6 +200,131 @@ var Results = function (_Component) {
 
 exports.default = Results;
 
+/***/ }),
+
+/***/ 224:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(11);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(19);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactDatepicker = __webpack_require__(57);
+
+var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+
+var _moment = __webpack_require__(0);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _Home = __webpack_require__(221);
+
+var _Home2 = _interopRequireDefault(_Home);
+
+var _Results = __webpack_require__(222);
+
+var _Results2 = _interopRequireDefault(_Results);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Layout = function (_Component) {
+  _inherits(Layout, _Component);
+
+  function Layout() {
+    _classCallCheck(this, Layout);
+
+    var _this = _possibleConstructorReturn(this, (Layout.__proto__ || Object.getPrototypeOf(Layout)).call(this));
+
+    _this.state = {
+      name: 'mario',
+      location: 'home',
+      date: ''
+    };
+    _this.routingSystem = _this.routingSystem.bind(_this);
+    _this.handleDateChange = _this.handleDateChange.bind(_this);
+    return _this;
+  }
+
+  _createClass(Layout, [{
+    key: 'routingSystem',
+    value: function routingSystem() {
+      switch (this.state.location) {
+        case 'home':
+          return _react2.default.createElement(_Home2.default, { handleDateChange: this.handleDateChange,
+            globalState: this.state });
+
+          break;
+        case 'results':
+          return _react2.default.createElement(_Results2.default, null);
+
+          break;
+        default:
+          return _react2.default.createElement(_Home2.default, null);
+      }
+    }
+  }, {
+    key: 'handleDateChange',
+    value: function handleDateChange(date) {
+      this.setState({
+        date: date
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'home' },
+        _react2.default.createElement(
+          'div',
+          { className: 'container' },
+          _react2.default.createElement(
+            'header',
+            null,
+            _react2.default.createElement(
+              'div',
+              { className: 'logo' },
+              'lili'
+            ),
+            _react2.default.createElement(
+              'nav',
+              { className: 'menu' },
+              _react2.default.createElement(
+                'a',
+                { href: '#',
+                  className: 'main-btn' },
+                'register'
+              )
+            )
+          ),
+          this.routingSystem()
+        )
+      );
+    }
+  }]);
+
+  return Layout;
+}(_react.Component);
+
+var app = document.getElementById('app');
+
+_reactDom2.default.render(_react2.default.createElement(Layout, null), app);
+
 /***/ })
 
-},[100]);
+},[224]);
