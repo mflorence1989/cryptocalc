@@ -90,8 +90,8 @@ var Home = function (_Component) {
               onChange: this.props.handleDateChange }),
             _react2.default.createElement(
               'button',
-              { type: 'submit' },
-              'Check Profits '
+              { type: 'submit', onClick: this.props.apiCall },
+              'Check Profits'
             )
           )
         )
@@ -346,7 +346,7 @@ var Layout = function (_Component) {
           } else {
             var loss = newCP - newSP;
             var lossPercent = loss / newCP * 100;
-            lossPercent = gainPercent.toFixed(2);
+            lossPercent = lossPercent.toFixed(2);
             console.log('loss percent ' + lossPercent);
           }
         });

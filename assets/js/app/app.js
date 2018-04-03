@@ -95,7 +95,7 @@ handleDateChange(date) {
       } else {
         var loss = newCP -newSP
         var lossPercent = (loss / newCP) * 100
-        lossPercent = gainPercent.toFixed(2)
+        lossPercent = lossPercent.toFixed(2)
         console.log(`loss percent ${lossPercent}`)
       }
     })
