@@ -14,7 +14,8 @@ class Layout extends Component {
       name: 'mario',
       location: 'home',
       date: moment(),
-      data: ''
+      data: '',
+      cryptoAmount:'1'
     }
     this.routingSystem =
     this.routingSystem.bind(this)
@@ -22,6 +23,8 @@ class Layout extends Component {
     this.handleDateChange.bind(this)
     this.apiCall =
     this.apiCall.bind(this)
+    this.onInputChange =
+    this.onInputChange.bind(this)
   }
   componentWillMount(){
     var self = this;
@@ -41,8 +44,11 @@ class Layout extends Component {
   routingSystem(){
     switch(this.state.location) {
     case 'home':
-    return <Home handleDateChange={this.handleDateChange}
-    globalState={this.state}/>
+    return <Home
+    handleDateChange={this.handleDateChange}
+    globalState={this.state}
+    onInputChange={this.onInputChange} apiCall={this.apiCall}/>
+
 
         break;
     case 'results':
@@ -58,10 +64,15 @@ handleDateChange(date) {
       date: date
     }, () => console.log(this.state.date.unix()));
   }
+  onInputChange(event){
+    this.setState({
+      cryptoAmount: event.target.value
+    })
+  }
   apiCall(){
     //https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=1522638147&extraParams=crypto_calc
     var self = this;
-    axios.get('https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=1522638147&extraParams=crypto_calc')
+    axios.get(`https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=${self.state.date.unix()}&extraParams=crypto_calc`)
   .then(function (response) {
 
     self.setState({
@@ -69,15 +80,21 @@ handleDateChange(date) {
     }, () => {
       console.log(self.state);
       const CP = self.state.data.USD
+      var newCP = (self.state.cryptoAmount * 100)
+      newCP = (newCP * CP) / 100
       const SP = self.state.btcToday.USD;
-      if(CP < SP){
-        var gain = SP - CP
-        var gainPercent = (gain / CP) * 100
+      var newSP = (self.state.cryptoAmount * 100)
+      newSP = (newSP * SP) / 100
+      if(newCP < newSP){
+        var gain = newSP - newCP
+        var gainPercent = (gain / newCP) * 100
         gainPercent = gainPercent.toFixed(2)
-        console.log(`percent of the profit ${gainPercent}`)
+        console.log(`${self.state.cryptoAmount} bitcoin newSP: ${newSP}, SP ${SP}, newCP: ${newCP},
+          CP: ${CP}`)
+        console.log(`profit percent is ${gainPercent}`)
       } else {
-        var loss = CP -SP
-        var lossPercent = (loss / CP) * 100
+        var loss = newCP -newSP
+        var lossPercent = (loss / newCP) * 100
         lossPercent = gainPercent.toFixed(2)
         console.log(`loss percent ${lossPercent}`)
       }

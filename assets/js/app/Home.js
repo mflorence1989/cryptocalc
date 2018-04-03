@@ -21,10 +21,12 @@ export default class Home extends Component {
         <div className="col-md-6">
       <h2>Enter transaction</h2>
       <label>Crypto Amount</label>
-      <input type="text" name="amount" />
+      <input type="text" name="amount"
+      onChange={this.props.onInputChange}
+      value={this.props.globalState.cryptoAmount} />
 
       <label>Date</label>
-    
+
       <DatePicker  selected={this.props.globalState.date}
         onChange={this.props.handleDateChange}/>
       <button type="submit">Check Profits </button>

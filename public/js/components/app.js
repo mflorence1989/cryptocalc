@@ -78,7 +78,9 @@ var Home = function (_Component) {
               null,
               'Crypto Amount'
             ),
-            _react2.default.createElement('input', { type: 'text', name: 'amount' }),
+            _react2.default.createElement('input', { type: 'text', name: 'amount',
+              onChange: this.props.onInputChange,
+              value: this.props.globalState.cryptoAmount }),
             _react2.default.createElement(
               'label',
               null,
@@ -257,11 +259,13 @@ var Layout = function (_Component) {
       name: 'mario',
       location: 'home',
       date: (0, _moment2.default)(),
-      data: ''
+      data: '',
+      cryptoAmount: '1'
     };
     _this.routingSystem = _this.routingSystem.bind(_this);
     _this.handleDateChange = _this.handleDateChange.bind(_this);
     _this.apiCall = _this.apiCall.bind(_this);
+    _this.onInputChange = _this.onInputChange.bind(_this);
     return _this;
   }
 
@@ -284,8 +288,10 @@ var Layout = function (_Component) {
     value: function routingSystem() {
       switch (this.state.location) {
         case 'home':
-          return _react2.default.createElement(_Home2.default, { handleDateChange: this.handleDateChange,
-            globalState: this.state });
+          return _react2.default.createElement(_Home2.default, {
+            handleDateChange: this.handleDateChange,
+            globalState: this.state,
+            onInputChange: this.onInputChange, apiCall: this.apiCall });
 
           break;
         case 'results':
@@ -308,26 +314,38 @@ var Layout = function (_Component) {
       });
     }
   }, {
+    key: 'onInputChange',
+    value: function onInputChange(event) {
+      this.setState({
+        cryptoAmount: event.target.value
+      });
+    }
+  }, {
     key: 'apiCall',
     value: function apiCall() {
       //https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=1522638147&extraParams=crypto_calc
       var self = this;
-      _axios2.default.get('https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=1522638147&extraParams=crypto_calc').then(function (response) {
+      _axios2.default.get('https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=' + self.state.date.unix() + '&extraParams=crypto_calc').then(function (response) {
 
         self.setState({
           data: response.data.BTC
         }, function () {
           console.log(self.state);
           var CP = self.state.data.USD;
+          var newCP = self.state.cryptoAmount * 100;
+          newCP = newCP * CP / 100;
           var SP = self.state.btcToday.USD;
-          if (CP < SP) {
-            var gain = SP - CP;
-            var gainPercent = gain / CP * 100;
+          var newSP = self.state.cryptoAmount * 100;
+          newSP = newSP * SP / 100;
+          if (newCP < newSP) {
+            var gain = newSP - newCP;
+            var gainPercent = gain / newCP * 100;
             gainPercent = gainPercent.toFixed(2);
-            console.log('percent of the profit ' + gainPercent);
+            console.log(self.state.cryptoAmount + ' bitcoin newSP: ' + newSP + ', SP ' + SP + ', newCP: ' + newCP + ',\n          CP: ' + CP);
+            console.log('profit percent is ' + gainPercent);
           } else {
-            var loss = CP - SP;
-            var lossPercent = loss / CP * 100;
+            var loss = newCP - newSP;
+            var lossPercent = loss / newCP * 100;
             lossPercent = gainPercent.toFixed(2);
             console.log('loss percent ' + lossPercent);
           }
