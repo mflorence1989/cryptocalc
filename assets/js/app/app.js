@@ -15,9 +15,9 @@ class Layout extends Component {
       location: 'home',
       date: moment(),
       data: '',
-      cryptoAmount:'1',
-      status:'',
-      totalStatus:''
+      cryptoAmount: '1',
+      status: '',
+      totalStatus: ''
     }
     this.routingSystem =
     this.routingSystem.bind(this)
@@ -49,13 +49,11 @@ class Layout extends Component {
     return <Home
     handleDateChange={this.handleDateChange}
     globalState={this.state}
-    onInputChange={this.onInputChange} checkProfits={this.checkProfits}/>
-
-
+    onInputChange={this.onInputChange}
+    checkProfits={this.checkProfits}/>
         break;
     case 'results':
-      return <Results/>
-
+      return <Results globalState={this.state}/>
         break;
     default:
       return <Home/>
@@ -104,9 +102,9 @@ handleDateChange(date) {
             CP: CP,
             newSP: newSP,
             SP: SP,
-            gainPercent: gainPercent
+            percent: gainPercent
           }
-        })
+        }, () => console.log(self.state))
 
       } else {
         var loss = newCP -newSP
@@ -122,7 +120,7 @@ handleDateChange(date) {
             CP: CP,
             newSP: newSP,
             SP: SP,
-            lossPercent: lossPercent
+            percent: lossPercent
           }
         })
       }

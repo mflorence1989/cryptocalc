@@ -145,12 +145,29 @@ var Results = function (_Component) {
     _this.state = {
       name: 'mario'
     };
+    _this.checkGains = _this.checkGains.bind(_this);
     return _this;
   }
 
   _createClass(Results, [{
+    key: 'checkGains',
+    value: function checkGains() {
+      var percent = this.props.globalState.totalStatus.percent;
+
+      if (this.props.globalState.totalStatus == 'gain') {
+        return 'You made ' + percent + '% profit';
+      } else {
+        return 'You loss ' + percent + '% of your investment ';
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _props$globalState$to = this.props.globalState.totalStatus,
+          percent = _props$globalState$to.percent,
+          newCP = _props$globalState$to.newCP,
+          newSP = _props$globalState$to.newSP;
+
       return _react2.default.createElement(
         'section',
         { id: 'results' },
@@ -169,17 +186,21 @@ var Results = function (_Component) {
           _react2.default.createElement(
             'h3',
             null,
-            'Your $1200 investment is now'
+            'Your $',
+            newCP,
+            ' investment is now'
           ),
           _react2.default.createElement(
             'h1',
             null,
-            '$7300'
+            '$',
+            newSP,
+            '0'
           ),
           _react2.default.createElement(
             'h4',
             null,
-            'You made 400% profit'
+            this.checkGains()
           ),
           _react2.default.createElement(
             'a',
@@ -293,12 +314,11 @@ var Layout = function (_Component) {
           return _react2.default.createElement(_Home2.default, {
             handleDateChange: this.handleDateChange,
             globalState: this.state,
-            onInputChange: this.onInputChange, checkProfits: this.checkProfits });
-
+            onInputChange: this.onInputChange,
+            checkProfits: this.checkProfits });
           break;
         case 'results':
-          return _react2.default.createElement(_Results2.default, null);
-
+          return _react2.default.createElement(_Results2.default, { globalState: this.state });
           break;
         default:
           return _react2.default.createElement(_Home2.default, null);
@@ -354,8 +374,10 @@ var Layout = function (_Component) {
                 CP: CP,
                 newSP: newSP,
                 SP: SP,
-                gainPercent: gainPercent
+                percent: gainPercent
               }
+            }, function () {
+              return console.log(self.state);
             });
           } else {
             var loss = newCP - newSP;
@@ -371,7 +393,7 @@ var Layout = function (_Component) {
                 CP: CP,
                 newSP: newSP,
                 SP: SP,
-                lossPercent: lossPercent
+                percent: lossPercent
               }
             });
           }
