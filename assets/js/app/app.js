@@ -15,14 +15,16 @@ class Layout extends Component {
       location: 'home',
       date: moment(),
       data: '',
-      cryptoAmount:'1'
+      cryptoAmount:'1',
+      status:'',
+      totalStatus:''
     }
     this.routingSystem =
     this.routingSystem.bind(this)
     this.handleDateChange =
     this.handleDateChange.bind(this)
-    this.apiCall =
-    this.apiCall.bind(this)
+    this.checkProfits =
+    this.checkProfits.bind(this)
     this.onInputChange =
     this.onInputChange.bind(this)
   }
@@ -47,7 +49,7 @@ class Layout extends Component {
     return <Home
     handleDateChange={this.handleDateChange}
     globalState={this.state}
-    onInputChange={this.onInputChange} apiCall={this.apiCall}/>
+    onInputChange={this.onInputChange} checkProfits={this.checkProfits}/>
 
 
         break;
@@ -69,7 +71,7 @@ handleDateChange(date) {
       cryptoAmount: event.target.value
     })
   }
-  apiCall(){
+  checkProfits(){
     //https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=1522638147&extraParams=crypto_calc
     var self = this;
     axios.get(`https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=${self.state.date.unix()}&extraParams=crypto_calc`)
@@ -91,13 +93,42 @@ handleDateChange(date) {
         gainPercent = gainPercent.toFixed(2)
         console.log(`${self.state.cryptoAmount} bitcoin newSP: ${newSP}, SP ${SP}, newCP: ${newCP},
           CP: ${CP}`)
-        console.log(`profit percent is ${gainPercent}`)
+        console.log(`profit percent is
+          ${gainPercent}`)
+          //set state with totals and change location
+        self.setState({
+          location: 'results',
+          status: 'gain',
+          totalStatus: {
+            newCP: newCP,
+            CP: CP,
+            newSP: newSP,
+            SP: SP,
+            gainPercent: gainPercent
+          }
+        })
+
       } else {
         var loss = newCP -newSP
         var lossPercent = (loss / newCP) * 100
         lossPercent = lossPercent.toFixed(2)
         console.log(`loss percent ${lossPercent}`)
+        //set state with totals and change location
+        self.setState({
+          location: 'results',
+          status: 'loss',
+          totalStatus: {
+            newCP: newCP,
+            CP: CP,
+            newSP: newSP,
+            SP: SP,
+            lossPercent: lossPercent
+          }
+        })
       }
+      self.setState({
+        location: 'results'
+      })
     })
   })
   .catch(function (error) {
@@ -110,7 +141,7 @@ handleDateChange(date) {
     return (<div className="home">
         <div className="container">
         <header>
-      <div className="logo" onClick={this.apiCall}>
+      <div className="logo" onClick={this.checkProfits}>
       CryptoCalc
       </div>
       <nav className="menu">

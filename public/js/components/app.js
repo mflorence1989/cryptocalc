@@ -90,7 +90,7 @@ var Home = function (_Component) {
               onChange: this.props.handleDateChange }),
             _react2.default.createElement(
               'button',
-              { type: 'submit', onClick: this.props.apiCall },
+              { type: 'submit', onClick: this.props.checkProfits },
               'Check Profits'
             )
           )
@@ -260,11 +260,13 @@ var Layout = function (_Component) {
       location: 'home',
       date: (0, _moment2.default)(),
       data: '',
-      cryptoAmount: '1'
+      cryptoAmount: '1',
+      status: '',
+      totalStatus: ''
     };
     _this.routingSystem = _this.routingSystem.bind(_this);
     _this.handleDateChange = _this.handleDateChange.bind(_this);
-    _this.apiCall = _this.apiCall.bind(_this);
+    _this.checkProfits = _this.checkProfits.bind(_this);
     _this.onInputChange = _this.onInputChange.bind(_this);
     return _this;
   }
@@ -291,7 +293,7 @@ var Layout = function (_Component) {
           return _react2.default.createElement(_Home2.default, {
             handleDateChange: this.handleDateChange,
             globalState: this.state,
-            onInputChange: this.onInputChange, apiCall: this.apiCall });
+            onInputChange: this.onInputChange, checkProfits: this.checkProfits });
 
           break;
         case 'results':
@@ -321,8 +323,8 @@ var Layout = function (_Component) {
       });
     }
   }, {
-    key: 'apiCall',
-    value: function apiCall() {
+    key: 'checkProfits',
+    value: function checkProfits() {
       //https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=1522638147&extraParams=crypto_calc
       var self = this;
       _axios2.default.get('https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=' + self.state.date.unix() + '&extraParams=crypto_calc').then(function (response) {
@@ -342,13 +344,40 @@ var Layout = function (_Component) {
             var gainPercent = gain / newCP * 100;
             gainPercent = gainPercent.toFixed(2);
             console.log(self.state.cryptoAmount + ' bitcoin newSP: ' + newSP + ', SP ' + SP + ', newCP: ' + newCP + ',\n          CP: ' + CP);
-            console.log('profit percent is ' + gainPercent);
+            console.log('profit percent is\n          ' + gainPercent);
+            //set state with totals and change location
+            self.setState({
+              location: 'results',
+              status: 'gain',
+              totalStatus: {
+                newCP: newCP,
+                CP: CP,
+                newSP: newSP,
+                SP: SP,
+                gainPercent: gainPercent
+              }
+            });
           } else {
             var loss = newCP - newSP;
             var lossPercent = loss / newCP * 100;
             lossPercent = lossPercent.toFixed(2);
             console.log('loss percent ' + lossPercent);
+            //set state with totals and change location
+            self.setState({
+              location: 'results',
+              status: 'loss',
+              totalStatus: {
+                newCP: newCP,
+                CP: CP,
+                newSP: newSP,
+                SP: SP,
+                lossPercent: lossPercent
+              }
+            });
           }
+          self.setState({
+            location: 'results'
+          });
         });
       }).catch(function (error) {
         console.log(error);
@@ -368,7 +397,7 @@ var Layout = function (_Component) {
             null,
             _react2.default.createElement(
               'div',
-              { className: 'logo', onClick: this.apiCall },
+              { className: 'logo', onClick: this.checkProfits },
               'CryptoCalc'
             ),
             _react2.default.createElement(
