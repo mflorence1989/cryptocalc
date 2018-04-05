@@ -27,6 +27,8 @@ class Layout extends Component {
     this.checkProfits.bind(this)
     this.onInputChange =
     this.onInputChange.bind(this)
+    this.goBack =
+    this.goBack.bind(this)
   }
   componentWillMount(){
     var self = this;
@@ -53,7 +55,8 @@ class Layout extends Component {
     checkProfits={this.checkProfits}/>
         break;
     case 'results':
-      return <Results globalState={this.state}/>
+      return <Results globalState={this.state}
+      goBack={this.state}/>
         break;
     default:
       return <Home/>
@@ -98,9 +101,9 @@ handleDateChange(date) {
           location: 'results',
           status: 'gain',
           totalStatus: {
-            newCP: newCP,
+            newCP: newCP.toFixed(2),
             CP: CP,
-            newSP: newSP,
+            newSP: newSP.toFixed(2),
             SP: SP,
             percent: gainPercent
           }
@@ -116,9 +119,9 @@ handleDateChange(date) {
           location: 'results',
           status: 'loss',
           totalStatus: {
-            newCP: newCP,
+            newCP: newCP.toFixed(2),
             CP: CP,
-            newSP: newSP,
+            newSP: newSP.toFixed(2),
             SP: SP,
             percent: lossPercent
           }
@@ -132,6 +135,17 @@ handleDateChange(date) {
   .catch(function (error) {
     console.log(error);
   });
+  }
+  goBack(){
+    this.setState({
+      location: 'home',
+      date: moment(),
+      data: '',
+      cryptoAmount: '1',
+      status: '',
+      totalStatus: ''
+
+    })
   }
 
 

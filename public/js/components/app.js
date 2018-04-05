@@ -205,7 +205,13 @@ var Results = function (_Component) {
           _react2.default.createElement(
             'a',
             { href: '#', className: 'main-btn active' },
-            'tracker'
+            'Create account to keep track of profits'
+          ),
+          _react2.default.createElement(
+            'a',
+            { href: '#', className: 'main-btn active',
+              onClick: this.props.goBack },
+            'check another transaction'
           ),
           _react2.default.createElement(
             'div',
@@ -289,6 +295,7 @@ var Layout = function (_Component) {
     _this.handleDateChange = _this.handleDateChange.bind(_this);
     _this.checkProfits = _this.checkProfits.bind(_this);
     _this.onInputChange = _this.onInputChange.bind(_this);
+    _this.goBack = _this.goBack.bind(_this);
     return _this;
   }
 
@@ -318,7 +325,8 @@ var Layout = function (_Component) {
             checkProfits: this.checkProfits });
           break;
         case 'results':
-          return _react2.default.createElement(_Results2.default, { globalState: this.state });
+          return _react2.default.createElement(_Results2.default, { globalState: this.state,
+            goBack: this.state });
           break;
         default:
           return _react2.default.createElement(_Home2.default, null);
@@ -370,9 +378,9 @@ var Layout = function (_Component) {
               location: 'results',
               status: 'gain',
               totalStatus: {
-                newCP: newCP,
+                newCP: newCP.toFixed(2),
                 CP: CP,
-                newSP: newSP,
+                newSP: newSP.toFixed(2),
                 SP: SP,
                 percent: gainPercent
               }
@@ -389,9 +397,9 @@ var Layout = function (_Component) {
               location: 'results',
               status: 'loss',
               totalStatus: {
-                newCP: newCP,
+                newCP: newCP.toFixed(2),
                 CP: CP,
-                newSP: newSP,
+                newSP: newSP.toFixed(2),
                 SP: SP,
                 percent: lossPercent
               }
@@ -403,6 +411,19 @@ var Layout = function (_Component) {
         });
       }).catch(function (error) {
         console.log(error);
+      });
+    }
+  }, {
+    key: 'goBack',
+    value: function goBack() {
+      this.setState({
+        location: 'home',
+        date: (0, _moment2.default)(),
+        data: '',
+        cryptoAmount: '1',
+        status: '',
+        totalStatus: ''
+
       });
     }
   }, {

@@ -31,7 +31,11 @@ checkGains(){
         <h1>${newSP}0</h1>
         <h4>{this.checkGains()}</h4>
         <a href="#" className="main-btn active">
-        tracker
+        Create account to keep track of profits
+        </a>
+        <a href="#" className="main-btn active"
+        onClick={this.props.goBack}>
+        check another transaction
         </a>
 
         <div className="ads">  </div>
