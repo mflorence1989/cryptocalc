@@ -134,30 +134,37 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Results = function (_Component) {
-  _inherits(Results, _Component);
+var Home = function (_Component) {
+  _inherits(Home, _Component);
 
-  function Results() {
-    _classCallCheck(this, Results);
+  function Home() {
+    _classCallCheck(this, Home);
 
-    var _this = _possibleConstructorReturn(this, (Results.__proto__ || Object.getPrototypeOf(Results)).call(this));
+    var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this));
 
     _this.state = {
-      name: 'mario'
+      name: 'Mario'
     };
+
     _this.checkGains = _this.checkGains.bind(_this);
     return _this;
   }
 
-  _createClass(Results, [{
+  _createClass(Home, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    }
+  }, {
     key: 'checkGains',
     value: function checkGains() {
       var percent = this.props.globalState.totalStatus.percent;
 
-      if (this.props.globalState.totalStatus == 'gain') {
+
+      if (this.props.globalState.status == 'gain') {
         return 'You made ' + percent + '% profit';
       } else {
-        return 'You loss ' + percent + '% of your investment ';
+        return 'You loss ' + percent + '% of your initial investment';
       }
     }
   }, {
@@ -180,53 +187,62 @@ var Results = function (_Component) {
             _react2.default.createElement(
               'div',
               { className: 'ads' },
-              '  '
+              _react2.default.createElement('ins', { className: 'adsbygoogle',
+                style: { "display": "block" },
+                'data-ad-client': 'ca-pub-1876888588409540',
+                'data-ad-slot': '6100356041',
+                'data-ad-format': 'auto' })
             )
           ),
           _react2.default.createElement(
-            'h3',
-            null,
-            'Your $',
-            newCP,
-            ' investment is now'
-          ),
-          _react2.default.createElement(
-            'h1',
-            null,
-            '$',
-            newSP,
-            '0'
-          ),
-          _react2.default.createElement(
-            'h4',
-            null,
-            this.checkGains()
-          ),
-          _react2.default.createElement(
-            'a',
-            { href: '#', className: 'main-btn active' },
-            'Create account to keep track of profits'
-          ),
-          _react2.default.createElement(
-            'a',
-            { href: '#', className: 'main-btn active',
-              onClick: this.props.goBack },
-            'check another transaction'
+            'div',
+            { className: 'col-md-12' },
+            _react2.default.createElement(
+              'h3',
+              null,
+              'Your $',
+              newCP,
+              ' dollar investment is now '
+            ),
+            _react2.default.createElement(
+              'h1',
+              null,
+              '$',
+              newSP
+            ),
+            _react2.default.createElement(
+              'h4',
+              null,
+              this.checkGains()
+            ),
+            _react2.default.createElement(
+              'a',
+              { href: '#', className: 'main-btn', onClick: this.props.goBack },
+              'Or Check Another Transaction'
+            )
           ),
           _react2.default.createElement(
             'div',
-            { className: 'ads' },
-            '  '
+            { className: 'col-md-12' },
+            _react2.default.createElement(
+              'div',
+              { className: 'ads' },
+              _react2.default.createElement('ins', { className: 'adsbygoogle',
+                style: { "display": "block" },
+                'data-ad-client': 'ca-pub-1876888588409540',
+                'data-ad-slot': '6100356041',
+                'data-ad-format': 'auto' })
+            )
           )
         )
       );
     }
   }]);
 
-  return Results;
+  return Home;
 }(_react.Component);
 
-exports.default = Results;
+exports.default = Home;
 
 /***/ }),
 
@@ -283,11 +299,11 @@ var Layout = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Layout.__proto__ || Object.getPrototypeOf(Layout)).call(this));
 
     _this.state = {
-      name: 'mario',
+      name: 'Mario',
       location: 'home',
       date: (0, _moment2.default)(),
       data: '',
-      cryptoAmount: '1',
+      cryptoAmount: 1,
       status: '',
       totalStatus: ''
     };
@@ -303,7 +319,7 @@ var Layout = function (_Component) {
     key: 'componentWillMount',
     value: function componentWillMount() {
       var self = this;
-      _axios2.default.get('https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=' + (0, _moment2.default)().unix() + '&extraParams=crypto_calc').then(function (response) {
+      _axios2.default.get('https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=' + (0, _moment2.default)().unix() + '&extraParams=crypto_profits_cp').then(function (response) {
         self.setState({
           btcToday: response.data.BTC
         }, function () {
@@ -318,15 +334,10 @@ var Layout = function (_Component) {
     value: function routingSystem() {
       switch (this.state.location) {
         case 'home':
-          return _react2.default.createElement(_Home2.default, {
-            handleDateChange: this.handleDateChange,
-            globalState: this.state,
-            onInputChange: this.onInputChange,
-            checkProfits: this.checkProfits });
+          return _react2.default.createElement(_Home2.default, { handleDateChange: this.handleDateChange, globalState: this.state, onInputChange: this.onInputChange, checkProfits: this.checkProfits });
           break;
         case 'results':
-          return _react2.default.createElement(_Results2.default, { globalState: this.state,
-            goBack: this.state });
+          return _react2.default.createElement(_Results2.default, { globalState: this.state, goBack: this.goBack });
           break;
         default:
           return _react2.default.createElement(_Home2.default, null);
@@ -353,10 +364,9 @@ var Layout = function (_Component) {
   }, {
     key: 'checkProfits',
     value: function checkProfits() {
-      //https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=1522638147&extraParams=crypto_calc
+      //https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=1513285669&extraParams=crypto_profits_cp
       var self = this;
-      _axios2.default.get('https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=' + self.state.date.unix() + '&extraParams=crypto_calc').then(function (response) {
-
+      _axios2.default.get('https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=' + self.state.date.unix() + '&extraParams=crypto_profits_cp').then(function (response) {
         self.setState({
           data: response.data.BTC
         }, function () {
@@ -367,12 +377,13 @@ var Layout = function (_Component) {
           var SP = self.state.btcToday.USD;
           var newSP = self.state.cryptoAmount * 100;
           newSP = newSP * SP / 100;
+
           if (newCP < newSP) {
             var gain = newSP - newCP;
             var gainPercent = gain / newCP * 100;
             gainPercent = gainPercent.toFixed(2);
-            console.log(self.state.cryptoAmount + ' bitcoin newSP: ' + newSP + ', SP ' + SP + ', newCP: ' + newCP + ',\n          CP: ' + CP);
-            console.log('profit percent is\n          ' + gainPercent);
+            console.log(self.state.cryptoAmount + ' bitcoin newSP: ' + newSP + ', SP: ' + SP + ', newCP: ' + newCP + ', CP: ' + CP);
+            console.log('profit percent is ' + gainPercent);
             //set state with totals and change location
             self.setState({
               location: 'results',
@@ -391,7 +402,7 @@ var Layout = function (_Component) {
             var loss = newCP - newSP;
             var lossPercent = loss / newCP * 100;
             lossPercent = lossPercent.toFixed(2);
-            console.log('loss percent ' + lossPercent);
+            console.log('loss percent is ' + lossPercent);
             //set state with totals and change location
             self.setState({
               location: 'results',
@@ -403,11 +414,10 @@ var Layout = function (_Component) {
                 SP: SP,
                 percent: lossPercent
               }
+            }, function () {
+              return console.log(self.state);
             });
           }
-          self.setState({
-            location: 'results'
-          });
         });
       }).catch(function (error) {
         console.log(error);
@@ -420,10 +430,9 @@ var Layout = function (_Component) {
         location: 'home',
         date: (0, _moment2.default)(),
         data: '',
-        cryptoAmount: '1',
+        cryptoAmount: 1,
         status: '',
         totalStatus: ''
-
       });
     }
   }, {
@@ -441,16 +450,15 @@ var Layout = function (_Component) {
             _react2.default.createElement(
               'div',
               { className: 'logo', onClick: this.checkProfits },
-              'CryptoCalc'
+              'Crypto Profits'
             ),
             _react2.default.createElement(
               'nav',
               { className: 'menu' },
               _react2.default.createElement(
                 'a',
-                { href: '#',
-                  className: 'main-btn' },
-                'register'
+                { href: '#', className: 'main-btn' },
+                'Register'
               )
             )
           ),
